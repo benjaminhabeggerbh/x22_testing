@@ -1,0 +1,46 @@
+[
+  {
+    "name": "EvoStationMaintenance",
+    "parallelUploads": 10
+  },  
+  {
+    "name": "EvoStation1",
+    "parallelUploads": 10
+  },
+  {
+    "name": "EvoStation2",
+    "parallelUploads": 10
+  },
+  {
+    "name": "EvoStation3",
+    "parallelUploads": 10
+  },
+  {
+    "name": "EvoStation4",
+    "parallelUploads": 10
+  },
+  {
+    "name": "EvoStation5",
+    "parallelUploads": 10
+  },
+  {
+    "name": "EvoStation6",
+    "parallelUploads": 10
+  },
+  {
+    "name": "EvoStation7",
+    "parallelUploads": 10
+  },
+  {
+  "name": "EvoStation8",
+  "parallelUploads": 10
+  },
+  {
+  "name": "EvoStation9",
+  "parallelUploads": 10
+  },
+  {
+    "name": "EvoStation10",
+    "parallelUploads": 10
+  }                 
+]

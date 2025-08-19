@@ -1,0 +1,19 @@
+run-tests:
+  stage: tests
+  tags:
+    - axiamo-evo-transfer-server
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - if: '$CI_COMMIT_MESSAGE =~ /\[runtests\]/'
+  script:
+    - echo "This is .gitlab-ci-run-tests.yml running"
+    - python3 runTests.py --count=1 x22_fleet/Testing/Test_RebootOnly.py
+  artifacts:
+    paths:
+      - "*.css"
+      - "*.html"
+      - "*.xml"
+    reports:
+      junit:
+        - "*.xml"

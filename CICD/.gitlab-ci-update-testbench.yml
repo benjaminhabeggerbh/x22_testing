@@ -1,0 +1,24 @@
+update-testbench:
+  stage: update-testbench
+  tags:
+    - axiamo-lab-runner
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - if: '$CI_COMMIT_MESSAGE =~ /\[testbenchupdate\]/'
+  script:
+    - echo "This is .gitlab-ci-update-services.yml running"
+    - sudo mkdir -p /opt/axiamo_transfer/services
+    - sudo mkdir -p /opt/axiamo_transfer/lib
+    - sudo mkdir -p /var/axiamo_transfer/logs
+    - sudo cp -rv . /opt/axiamo_transfer/lib
+    - sudo tree /opt/axiamo_transfer
+    - sudo pip install /opt/axiamo_transfer/lib
+    - sudo cp /opt/axiamo_transfer/lib/services/power_relay.service /etc/systemd/system/
+    - sudo systemctl daemon-reload
+    - sudo systemctl stop power_relay.service    
+    - sudo systemctl enable power_relay.service
+    - sudo systemctl start power_relay.service
+    - sudo systemctl status power_relay.service    
+
+

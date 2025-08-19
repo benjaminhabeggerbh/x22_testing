@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package status_listener;
+
+// The service definition for the StatusListener
+service StatusListener {
+  // RPC to get the DataFrame as a list of key-value maps
+  rpc GetDataFrame (DataFrameRequest) returns (DataFrameResponse);
+}
+
+// Empty request message for GetDataFrame
+message DataFrameRequest {}
+
+// Response message containing the DataFrame data
+message DataFrameResponse {
+  // Repeated field to hold rows of the DataFrame
+  repeated DataRow data = 1;
+}
+
+// Message for a single row of the DataFrame
+message DataRow {
+  map<string, string> fields = 1;
+}

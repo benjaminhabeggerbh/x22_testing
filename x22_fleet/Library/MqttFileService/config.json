@@ -1,0 +1,6 @@
+{
+    "broker_address": "167.235.159.207",
+    "base_topic": "file_transfer_topic",
+    "chunk_size": 8192,
+    "save_directory": "/tmp"
+}

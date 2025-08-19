@@ -1,0 +1,8 @@
+PySide6
+paho-mqtt
+pandas
+crcmod
+paramiko
+grpcio
+grpcio-tools
+dash

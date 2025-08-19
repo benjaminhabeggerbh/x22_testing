@@ -1,0 +1,43 @@
+maintenance:
+  stage: update-services
+  tags:
+    - axiamo-evo-transfer-server
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      when: never
+    - if: '$CI_COMMIT_MESSAGE =~ /\[serviceupdate\]/'
+  script:
+    - echo "This is .gitlab-ci-update-services.yml running"
+    - sudo mkdir -p /opt/axiamo_transfer/services
+    - sudo mkdir -p /opt/axiamo_transfer/lib
+    - sudo mkdir -p /var/axiamo_transfer/logs
+    - sudo mkdir -p /etc/axiamo_transfer/
+    - sudo cp -rv . /opt/axiamo_transfer/lib
+    - sudo tree /opt/axiamo_transfer
+    - sudo pip install /opt/axiamo_transfer/lib
+    - sudo cp /opt/axiamo_transfer/lib/services/statuslistener.service /etc/systemd/system/
+    
+    - sudo cp /opt/axiamo_transfer/lib/services/distributor.service /etc/systemd/system/    
+    - sudo cp /opt/axiamo_transfer/lib/config/distributor.json /etc/axiamo_transfer/distributor.json
+
+    - sudo cp /opt/axiamo_transfer/lib/services/awstransfer.service /etc/systemd/system/    
+    - sudo systemctl daemon-reload
+    
+    # restart StatusListener
+    - sudo systemctl stop statuslistener.service    
+    - sudo systemctl enable statuslistener.service
+    - sudo systemctl start statuslistener.service
+    - sudo systemctl status statuslistener.service
+
+    # restart Distributor
+    - sudo systemctl stop distributor.service    
+    - sudo systemctl enable distributor.service
+    - sudo systemctl start distributor.service
+    - sudo systemctl status distributor.service
+
+    # restart aws-transfer
+    - sudo systemctl stop awstransfer.service    
+    - sudo systemctl enable awstransfer.service
+    - sudo systemctl start awstransfer.service
+    - sudo systemctl status awstransfer.service
+

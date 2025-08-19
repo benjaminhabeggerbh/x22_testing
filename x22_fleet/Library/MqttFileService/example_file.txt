@@ -1,0 +1,55 @@
+import unittest
+import os
+import time
+import threading
+from mqtt_file_client import MqttFileClient  # Assuming MqttFileClient is in a separate file
+from mqtt_file_server import MqttFileServer  # Assuming MqttFileServer is in a separate file
+
+class TestMqttFileTransfer(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.config_path = "config.json"
+        cls.file_path = "test_file.txt"
+
+        # Create a test file
+        with open(cls.file_path, "w") as f:
+            f.write("This is a test file for MQTT transfer.")
+
+        # Start the server in a separate thread
+        cls.server = MqttFileServer(cls.config_path)
+        cls.server_thread = threading.Thread(target=cls.server.start)
+        cls.server_thread.daemon = True
+        cls.server_thread.start()
+        time.sleep(1)  # Give server time to start
+
+    @classmethod
+    def tearDownClass(cls):
+        # Stop the server
+        cls.server.client.loop_stop()
+        cls.server.client.disconnect()
+        # Remove the test file
+        if os.path.exists(cls.file_path):
+            os.remove(cls.file_path)
+        # Remove received file
+        received_file_path = os.path.join("./received_files", os.path.basename(cls.file_path))
+        if os.path.exists(received_file_path):
+            os.remove(received_file_path)
+
+    def test_file_transfer(self):
+        # Start the client and send the file
+        client = MqttFileClient(self.config_path)
+        client.start()
+        client.send_file(self.file_path)
+        client.stop()
+
+        # Check if the file was received correctly
+        received_file_path = os.path.join("./received_files", os.path.basename(self.file_path))
+        self.assertTrue(os.path.exists(received_file_path))
+        with open(received_file_path, "r") as f:
+            received_content = f.read()
+        with open(self.file_path, "r") as f:
+            original_content = f.read()
+        self.assertEqual(received_content, original_content)
+
+if __name__ == "__main__":
+    unittest.main()

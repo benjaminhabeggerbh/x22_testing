@@ -1,0 +1,4 @@
+docker attach aivingstation_2e19346fd165
+verification_starter_server 
+
+--> test up to 20 sensors

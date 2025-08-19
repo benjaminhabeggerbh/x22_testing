@@ -1,0 +1,16 @@
+[Unit]
+Description=X22 Testbench Power Relais Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=power_relais
+Restart=on-failure
+User=axiamo
+WorkingDirectory=/var/axiamo_transfer
+Environment="PATH=/usr/bin"
+StandardOutput=append:/var/log/x22_testbench_relais.log
+StandardError=append:/var/log/x22_testbench_relais_error.log
+
+[Install]
+WantedBy=multi-user.target

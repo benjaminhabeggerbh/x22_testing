@@ -1,0 +1,6 @@
+[console_scripts]
+power_relais = x22_fleet.Testing.PowerRelais:main
+x22_aws_transfer = x22_fleet.Library.AwsTransfer:main
+x22_commander = x22_fleet.CommanderGui.CommanderGui:main
+x22_distributor = x22_fleet.Library.Distributor:main
+x22_status = x22_fleet.Library.StatusListener.StatusListener:main

@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor State Visualization</title>
+    <script>
+        async function fetchAndUpdateState() {
+            try {
+                const timestamp = new Date().getTime();
+                document.getElementById("state-diagram").src = `current_state.png?t=${timestamp}`;
+            } catch (error) {
+                console.error("Error updating state diagram:", error);
+            }
+        }
+
+        function startAutoRefresh(interval) {
+            fetchAndUpdateState();
+            setInterval(fetchAndUpdateState, interval);
+        }
+    </script>
+</head>
+<body onload="startAutoRefresh(3000)">
+    <h1>Sensor State Visualization</h1>
+    <p>The current state of the sensor is visualized below. This page updates every 3 seconds.</p>
+    <img id="state-diagram" src="" alt="Sensor State Diagram" style="max-width: 100%; height: auto; border: 1px solid #ccc;">
+</body>
+</html>

@@ -1,0 +1,11 @@
+ChangeLog:
+* updated to IDF 5.4 (OS, Stacks)
+* Replaced FATFS with TinyFS as it is promoted as much more resilient to power outage and the like
+
+* Testing: 500+ Records started / stopped with integrationtest, number of sessions matches exactly
+* Manual test with unplugging
+" Manual test, reboot while recording
+" Manual test, shutdown while recording
+" Manual test, hardrest while recording
+* Fail: Record over the capacity of the FS causes session to be lost?
+

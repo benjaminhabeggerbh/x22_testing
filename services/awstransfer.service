@@ -1,0 +1,16 @@
+[Unit]
+Description=X22 AWS transfer Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=x22_aws_transfer --credentials=/etc/axiamo_transfer/credentials.json --aws_secrets=/etc/axiamo_transfer/aws-secrets.json
+Restart=on-failure
+User=axiamo
+WorkingDirectory=/var/axiamo_transfer/logs
+Environment="PATH=/usr/bin"
+StandardOutput=append:/var/log/x22_aws_transfer.log
+StandardError=append:/var/log/x22_aws_transfer.log
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,86 @@
+
+fw update via USB?
+        pass
+        
+      Record on unplug?
+        pass, judged from LED
+
+        
+      Upload on replug?
+        pass:
+        ----------------------------
+                      fw     v  mA soc timeVal sessions                             generic_message                    lastseen     ram8    ram32     ramSPI           AP
+        status-X22_0D_14_96  1.9  3703  37  17       1        0  File uploaded: /extflash/1727237674_rec.bd  2024-09-25 06:17:18.691551  61504.0  68528.0  1733196.0  EvoStation1
+        --> X22_0D_14_96-1727237674_rec.bd.uploaded
+        
+      Storage okay on force shutdown?
+       pass: manual test pushing the button > 10 sec, sensor lights off. 
+       pass: on restart orange led since time lost --> "hard reset" / force shutdown verified
+       pass: when restarting, no magenta light, storage okay
+        
+      200 Hz sampling rate?
+        Manual test for now, stop watch and unplug, 130 seconds between unplug and replug, 30 sec timeout before start record
+            X22_0D_1B_6E        20416.0              0.0          -30.688889         3716.766667        102.08              0.0
+        pass, but testing method insufficient
+
+      Power consumption?
+                              total_samples  missing_samples  average_current_mA  average_voltage_mV  time_seconds  percent_missing
+                X22_0D_1B_6E        19200.0              0.0          -32.741176              3660.0          38.4              0.0
+                Total               19200.0              0.0          -32.741176              3660.0          38.4              0.0
+
+        Pass, 32 mV at 3.6V, naive calculation would be 120 mAh / 32 mV ~ 3.75h, saftey margin to 3h promise 45 minutes, should be in range, needs better testing
+        
+      MQTT logging?
+        pass:
+
+                   fw     v mA soc timeVal sessions  generic_message                    lastseen     ram8    ram32     ramSPI           AP
+        status-X22_0D_14_96  1.9  3699  9  17       1        0  {'unplugged 30}  2024-09-25 06:25:17.678434  61304.0  68328.0  1733300.0  EvoStation1
+        waiting on sensor updates
+        number of sensors online: 1
+        
+      Gap free sampling?
+        pass, but to be reliable needs a lot of testing on many sensors
+
+        
+      Firmware version
+        1.90
+
+        
+      python fw-updater available?
+      	pass
+
+        
+      remote fw update tested?
+        pass:
+            server: axiamo@RemoteServerEvo4HP:~/ftp/firmware$ cp X22-Firmware-EvoStation1-1.90-Manual.bin X22_0D_1B_6E.bin
+            sensor:
+            FTP Client sendCommand: RETR firmware/X22_0D_1B_6E.bin
+            FTP Client Response: 150 Opening BINARY mode data connection for firmware/X22_0D_1B_6E.bin (1550944 bytes).
+
+            FTP Client Response: 226 Transfer complete.
+
+            FTP Client sendCommand: DELE firmware/X22_0D_1B_6E.bin
+            FTP Client Response: 250 Delete operation successful.
+
+            FTP Client sendCommand: QUIT
+            FTP Client Response: 221 Goodbye.
+	pass:        turns dark blue, reboots, reports firmware 1.90
+        
+      time synchronized
+        pass, timevalid and X22_0D_1B_6E-1727240310_rec.bd.uploaded --> Wed Sep 25 2024 06:58:30 GMT+0200 (Central European Summer Time)
+
+        
+      time maintained after deepsleep?
+        pass, no orange when turned off normally
+    
+    charging current? 
+        pass, 37 mA 
+
+    Storage okay when running out of battery?
+        fail, sensor came up magenta, find issue and fix in 1.91
+	needs mass testing
+
+    raw data plausability:
+        pass: X22_0D_1B_6E-1727243126_rec.bd.uploaded.png
+    raw data verification: skipped, needs test rig, not available yet
+    

@@ -1,0 +1,27 @@
+Metadata-Version: 2.2
+Name: x22_fleet
+Version: 0.1.0
+Summary: X22 Management Utility Library and testing
+Home-page: https://gitlab.com/AxiamoGitlab/x22_testing
+Author: Benjamin Habegger
+Author-email: benjamin.habegger@axiamo.com
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: To be defined
+Requires-Python: >=3.7
+Requires-Dist: PySide6
+Requires-Dist: paho-mqtt
+Requires-Dist: pandas
+Requires-Dist: crcmod
+Requires-Dist: paramiko
+Requires-Dist: grpcio
+Requires-Dist: grpcio-tools
+Requires-Dist: dash
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: home-page
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
